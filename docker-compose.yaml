@@ -1,4 +1,17 @@
 services:
+  nginx:
+    image: nginx:1.27-alpine
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./ci/development/nginx/conf.d:/etc/nginx/conf.d
+      - ./ci/development/nginx/partials:/etc/nginx/partials
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+
   frontend:
     image: sample-todo-app-node
     build:
@@ -10,8 +23,6 @@ services:
     volumes:
       - ./apps/frontend:/app
       - frontend-node-modules:/app/node_modules
-    ports:
-      - "5173:5173"
     env_file:
       - ./apps/frontend/.env
 
@@ -23,8 +34,6 @@ services:
     volumes:
       - ./apps/backend:/app
       - backend-node-modules:/app/node_modules
-    ports:
-      - "3000:3000"
     env_file:
       - ./apps/backend/.env
     depends_on:
