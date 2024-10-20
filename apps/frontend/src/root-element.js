@@ -1,19 +1,32 @@
 import { css, html, LitElement } from 'lit';
+import { sendGet } from './http.js';
 
 export class RootElement extends LitElement {
   static get properties() {
     return {
+      _loading: { type: Boolean },
       _todos: { type: Array },
     }
   }
 
   constructor() {
     super();
+    this._loading = true;
     this._todos = [];
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    this._fetchTodos();
+  }
+
+  async _fetchTodos() {
+    this._todos = await sendGet('/todos');
+    this._loading = false;
+  }
+
   render() {
-    return html`
+    return this._loading ? null : html`
       <div class="app">
         ${this._todos.length ? this._renderList() : this._renderEmpty()}
       </div>
