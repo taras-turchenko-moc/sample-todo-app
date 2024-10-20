@@ -1,6 +1,5 @@
-/** @type {import('vite').UserConfig} */
-const config = {
-  clearScreen: false
-}
+import { defineConfig } from 'vite';
 
-export default config;
+export default defineConfig({
+  clearScreen: false,
+});

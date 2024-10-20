@@ -1,4 +1,16 @@
 {
   "name": "@sample-todo-app/backend",
-  "private": true
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "export $(cat .env | xargs) && node --watch ./src/main.js",
+    "db:new-migration": "export $(cat .env | xargs) && drizzle-kit generate",
+    "db:migrate": "export $(cat .env | xargs) && drizzle-kit migrate"
+  },
+  "dependencies": {
+    "drizzle-kit": "^0.26.2",
+    "drizzle-orm": "^0.35.2",
+    "express": "^4.21.1",
+    "pg": "^8.13.0"
+  }
 }
