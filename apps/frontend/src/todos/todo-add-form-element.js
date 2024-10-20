@@ -4,10 +4,10 @@ import { sendPost } from '../http.js';
 export class TodoAddFormElement extends LitElement {
   render() {
     return html`
-        <form class="form" @submit="${this._onSubmit}">
-          <input name="text" class="form__input">
+        <form @submit="${this._onSubmit}">
+          <input name="text">
 
-          <button class="form__submit">
+          <button type="submit">
             Add
           </button>
         </form>
@@ -16,8 +16,13 @@ export class TodoAddFormElement extends LitElement {
 
   async _onSubmit(event) {
     event.preventDefault();
-    const text = event.target.text.value.trim();
-    if (text) await this._create(text)
+    const inputEl = event.target.text;
+    const text = inputEl.value.trim();
+
+    if (text) {
+      await this._create(text)
+      inputEl.value = '';
+    }
   }
 
   async _create(text) {
@@ -26,18 +31,18 @@ export class TodoAddFormElement extends LitElement {
   }
 
   static styles = css`
-    .form {
+    form {
       display: flex;
       width: 100%;
       max-width: 500px;
     }
-    
-    .form__input {
+
+    input {
       flex-basis: 0;
       flex-grow: 1;
     }
 
-    .form__submit {
+    button {
       flex-shrink: 0;
       margin-left: 8px
     }

@@ -41,7 +41,7 @@ export class RootElement extends LitElement {
   }
 
   _renderList() {
-    return html`<app-todo-list .todos=${this._todos}></app-todo-list>`;
+    return html`<app-todo-list .todos=${this._todos} @todo-added="${this._onTodoAdded}"></app-todo-list>`;
   }
 
   _onTodoAdded(event) {

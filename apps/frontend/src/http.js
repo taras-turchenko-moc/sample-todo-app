@@ -1,9 +1,13 @@
+export function sendGet(url) {
+  return send({ method: 'GET', url });
+}
+
 export function sendPost(url, body) {
   return send({ method: 'POST', url, body });
 }
 
-export function sendGet(url) {
-  return send({ method: 'GET', url });
+export function sendPatch(url, body) {
+  return send({ method: 'PATCH', url, body });
 }
 
 async function send({ method, url, body }) {
