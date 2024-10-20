@@ -17,10 +17,10 @@ spec:
         app: nginx
     spec:
       containers:
-        - name: nginx
-          image: localhost:5000/sample-todo-app-nginx:latest
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 80
-              protocol: TCP
+      - name: nginx
+        image: localhost:5000/sample-todo-app-nginx:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          protocol: TCP
       restartPolicy: Always
