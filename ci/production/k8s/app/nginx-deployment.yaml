@@ -18,8 +18,8 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: docker.io/library/sample-todo-app-nginx:latest
-          imagePullPolicy: Never
+          image: localhost:5000/sample-todo-app-nginx:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
               protocol: TCP
