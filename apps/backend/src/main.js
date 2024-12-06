@@ -5,7 +5,7 @@ import { db } from './db/connection.js';
 import { todosRouter } from './routers/todos.js';
 
 const APP_PORT = 3000;
-const APP_HOST = 'localhost';
+const APP_HOST = '0.0.0.0';
 
 const app = express();
 

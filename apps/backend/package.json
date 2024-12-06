@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "export $(cat .env | xargs) && node --watch ./src/main.js",
+    "dev": "node --watch ./src/main.js",
     "db:new-migration": "drizzle-kit generate",
-    "db:migrate": "export $(cat .env | xargs) && drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
     "body-parser": "^1.20.3",
