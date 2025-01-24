@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: database
+  namespace: database
+  labels:
+    app: database
+spec:
+  selector:
+    matchLabels:
+      app: database
+  serviceName: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      nodeSelector:
+        app: database
+      containers:
+      - name: database
+        image: postgres:17.2-alpine
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5432
+          protocol: TCP
+        resources:
+          requests:
+            memory: 300Mi
+            cpu: 100m
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/postgresql/data
+        envFrom:
+        - secretRef:
+            name: database
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi

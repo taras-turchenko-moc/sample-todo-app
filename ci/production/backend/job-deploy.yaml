@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: backend-deploy
+  namespace: backend
+spec:
+  ttlSecondsAfterFinished: 600
+  backoffLimit: 0
+  template:
+    spec:
+      containers:
+      - name: deploy
+        image: localhost:5000/sample-todo-app-backend-prod:latest
+        imagePullPolicy: Always
+        command: ["npm", "run", "db:migrate"]
+        resources:
+          requests:
+            memory: 100Mi
+            cpu: 50m
+        envFrom:
+        - secretRef:
+            name: backend
+      restartPolicy: Never

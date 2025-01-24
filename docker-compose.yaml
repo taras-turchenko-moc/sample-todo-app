@@ -5,6 +5,18 @@ x-node-shared: &node-shared
   command: npm run dev
 
 services:
+  nginx:
+    image: nginx:1.27-alpine
+    tty: true
+    stdin_open: true
+    volumes:
+    - ./ci/development/nginx/conf.d:/etc/nginx/conf.d
+    ports:
+    - "80:80"
+    depends_on:
+    - frontend
+    - backend
+
   frontend:
     <<: *node-shared
     build:
@@ -15,8 +27,6 @@ services:
     volumes:
     - ./apps/frontend:/app
     - frontend-node-modules:/app/node_modules
-    ports:
-    - "5173:5173"
 
   backend:
     <<: *node-shared
@@ -25,8 +35,6 @@ services:
     volumes:
     - ./apps/backend:/app
     - backend-node-modules:/app/node_modules
-    ports:
-    - "3000:3000"
     depends_on:
     - db
 

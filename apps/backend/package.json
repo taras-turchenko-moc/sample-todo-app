@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch ./src/main.js",
+    "prod": "node ./src/main.js",
     "db:new-migration": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate"
   },

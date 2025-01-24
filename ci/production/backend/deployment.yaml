@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: backend
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      nodeSelector:
+        app: backend
+      tolerations:
+      - key: app
+        value: backend
+        operator: "Equal"
+        effect: "NoSchedule"
+      containers:
+      - name: backend
+        image: localhost:5000/sample-todo-app-backend-prod:latest
+        imagePullPolicy: Always
+        command: ["npm", "run", "prod"]
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        resources:
+          requests:
+            memory: 300Mi
+            cpu: 100m
+        envFrom:
+        - secretRef:
+            name: backend
+        startupProbe:
+          httpGet:
+            port: 3000
+            path: /api/health
+          initialDelaySeconds: 5
+          periodSeconds: 1
+        livenessProbe:
+          httpGet:
+            port: 3000
+            path: /api/health
+          initialDelaySeconds: 5
+        readinessProbe:
+          httpGet:
+            port: 3000
+            path: /api/health
+          initialDelaySeconds: 5
